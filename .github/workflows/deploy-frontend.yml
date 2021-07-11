@@ -1,0 +1,7 @@
+name: Build & Push frontend image to Dockerhub and deploy on Elastic Beanstalk
+on:
+  push:
+    branches:
+      - master
+    paths:
+      -
