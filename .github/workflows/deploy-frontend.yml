@@ -38,4 +38,37 @@ jobs:
       - name: Build Docker Frontend Image
         run: docker build -t ${{ secrets.DOCKERHUB_FRONTEND_REPO }} -f
           ./frontend.Dockerfile .
-      - name: Tag Our Fron
+      - name: Tag Our Frontend Image
+        run: docker tag ${{ secrets.DOCKERHUB_FRONTEND_REPO }}
+          ${{ secrets.DOCKERHUB_FRONTEND_REPO }}:${{ github.sha }}
+      - name: Push Frontend to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_FRONTEND_REPO }}:${{ github.sha }}
+      - name: Prepare Beanstalk Deployment Package
+        run: |
+          echo 'Replacing TAG in Dockerrun.aws.json...'
+          sed -i -e "s|<DOCKERHUB_REPO>|$DOCKERHUB_REPO|g" Dockerrun.aws.json
+          sed -i -e "s|<TAG>|$SHA|g" Dockerrun.aws.json
+          sed -i -e "s|<CONTAINER_PORT>|$CONTAINER_PORT|g" Dockerrun.aws.json
+          sed -i -e "s|<HOST_PORT>|$HOST_PORT|g" Dockerrun.aws.json
+          echo 'Creating deployment package...'
+          zip -r deploy-frontend.zip Dockerrun.aws.json
+        env:
+          SHA: ${{ github.sha }}
+          CONTAINER_PORT: 3000
+          HOST_PORT: 3000
+          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_FRONTEND_REPO }}
+      - name: Get Timestamp
+        shell: bash
+        run: echo "##[set-output name=timestamp;]$(date '+%Y%m%d%H%M%S')"
+        id: get_timestamp
+      - name: Get Elastic Beanstalk Label
+        shell: bash
+        run: echo "##[set-output name=label;]$(echo ${NAME}-${TIMESTAMP})"
+        id: get_frontend_label
+        env:
+          TIMESTAMP: ${{ steps.get_timestamp.outputs.timestamp }}
+          NAME: ${{ secrets.AWS_EB_FRONTEND_ENVIRONMENT }}
+      - name: Deploy Frontend to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+         
