@@ -4,4 +4,38 @@ on:
     branches:
       - master
     paths:
-      -
+      - 'packages/frontend/**'
+      - 'packages/shared/**'
+      - 'packages/backend/prisma/**'
+      - 'package.json'
+      - 'frontend.Dockerfile'
+      - 'Dockerrun.aws.json'
+      - '.github/workflows/deploy-frontend.yml'
+      - 'package.json'
+      - 'package-lock.json'
+jobs:
+  build_docker_images:
+    name: Build/Push Docker Image and Deploy to Elastic Beanstalk
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Create .env files
+        run: |
+          echo "NODE_ENV=production" >> ./packages/frontend/.env.local
+          echo "NEXT_PUBLIC_BACKEND_API=${{ secrets.NEXT_PUBLIC_BACKEND_API }}" >> ./packages/frontend/.env.local
+          echo "NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_OAUTH_CLIENT_ID }}" >> ./packages/frontend/.env.local
+          echo "NEXT_PUBLIC_DISCORD_OAUTH_URL=${{ secrets.NEXT_PUBLIC_DISCORD_OAUTH_URL }}" >> ./packages/frontend/.env.local
+          echo "NEXT_PUBLIC_DISCORD_ADD_TO_SERVER_URL=${{ secrets.NEXT_PUBLIC_DISCORD_ADD_TO_SERVER_URL }}" >> ./packages/frontend/.env.local
+
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+          logout: true
+      - name: Build Docker Frontend Image
+        run: docker build -t ${{ secrets.DOCKERHUB_FRONTEND_REPO }} -f
+          ./frontend.Dockerfile .
+      - name: Tag Our Fron
