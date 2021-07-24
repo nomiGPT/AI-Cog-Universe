@@ -31,4 +31,20 @@ COPY --from=build /app/package*.json /app/
 COPY --from=build /app/packages/frontend/package*.json /app/packages/frontend/
 COPY --from=build /app/packages/backend/package*.json /app/packages/backend/
 
-COPY --from=build /app/packages/backend/prisma /app/packages/backen
+COPY --from=build /app/packages/backend/prisma /app/packages/backend/prisma
+
+
+# Install production dependencies for frontend
+RUN npm ci --omit=dev
+
+# Install nestjs globally
+RUN npm install -g @nestjs/cli
+
+# Generate prisma client
+RUN npm run prisma:generate
+
+# Expose port 3000
+EXPOSE 3000
+
+CMD ["npm", "run", "start:frontend:prod"]
+
