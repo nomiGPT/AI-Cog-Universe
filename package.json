@@ -1,0 +1,32 @@
+
+{
+  "name": "cogniverse",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "version": "0.0.1",
+  "description": "next.js/nest.js project for document querying using LLMs powered by Langchain",
+  "scripts": {
+    "test": "npm run test",
+    "start:frontend:dev": "npm --prefix packages/frontend run dev",
+    "frontend:build": "npm --prefix packages/frontend run build",
+    "start:frontend:prod": "npm --prefix packages/frontend run start",
+    "start:backend:dev": "npm --prefix packages/backend run start:dev",
+    "backend:build": "npm --prefix packages/backend run build",
+    "start:backend:prod": "npm --prefix packages/backend run start:prod",
+    "unit:test:backend": "npm --prefix packages/backend run test",
+    "prisma:generate": "npm --prefix packages/backend run prisma:generate",
+    "prisma:migrate": "npm --prefix packages/backend run prisma:migrate",
+    "shared:build": "npm --prefix packages/shared run build"
+  },
+  "keywords": [
+    "ChatGPT",
+    "PDF",
+    "Langchain",
+    "next.js",
+    "nest.js"
+  ],
+  "author": "Abderrahim Mellouki",
+  "license": "MIT"
+}
