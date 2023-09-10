@@ -1,0 +1,155 @@
+
+// Prisma schema, more in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Conversation {
+  id          Int               @id @default(autoincrement())
+  title       String
+  documentId  Int?
+  document    DocumentMetadata? @relation("DocumentMetadata", fields: [documentId], references: [id])
+  chatHistory Message[]
+  creator     Account           @relation("conversationCreator", fields: [creatorId], references: [id])
+  creatorId   String
+  botId       Int?
+  bot         Bot?              @relation(fields: [botId], references: [id])
+}
+
+model Bot {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique()
+  conversation    Conversation[]
+  description     String?
+  type            BotType
+  configVersion   String            @default("0.0.1")
+  configuration   Json
+  discordMessages DiscordMessage[]
+  slackMessages   SlackMessage[]
+  boundDocument   DocumentMetadata? @relation("boundDocument", fields: [boundDocumentId], references: [id])
+  boundDocumentId Int?
+  public          Boolean           @default(false)
+  creator         Account           @relation("creator", fields: [creatorId], references: [id])
+  creatorId       String
+
+  @@index(fields: [name])
+}
+
+model Message {
+  id             Int           @id @default(autoincrement())
+  type           String
+  content        String
+  fromId         Int?
+  fromType       String
+  conversationId Int?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+}
+
+model DiscordConversation {
+  id          String           @id
+  chatHistory DiscordMessage[]
+
+  @@index(fields: [id])
+}
+
+model DiscordMessage {
+  id                    String               @id
+  createdAt             DateTime
+  content               String
+  discordConversationId String?
+  isBot                 Boolean              @default(false)
+  authorId              String
+  username              String
+  botId                 Int?
+  conversation          DiscordConversation? @relation(fields: [discordConversationId], references: [id])
+  bot                   Bot?                 @relation(fields: [botId], references: [id])
+
+  @@index(fields: [id, discordConversationId])
+}
+
+model SlackConversation {
+  id          String         @id
+  chatHistory SlackMessage[]
+
+  @@index(fields: [id])
+}
+
+model SlackMessage {
+  id                  String             @id
+  createdAt           DateTime
+  content             String
+  slackConversationId String?
+  isBot               Boolean            @default(false)
+  authorId            String
+  username            String
+  botId               Int?
+  conversation        SlackConversation? @relation(fields: [slackConversationId], references: [id])
+  bot                 Bot?               @relation(fields: [botId], references: [id])
+
+  @@index(fields: [id, slackConversationId])
+}
+
+model DocumentMetadata {
+  id                   Int            @id @default(autoincrement())
+  title                String
+  size                 Int
+  url                  String
+  embeddedAt           DateTime       @default(now())
+  embeddingStatus      String
+  conversationDocument Conversation[] @relation("DocumentMetadata")
+  bots                 Bot[]          @relation("boundDocument")
+  owner                Account        @relation("owner", fields: [ownerId], references: [id])
+  ownerId              String
+}
+
+model Account {
+  id             String             @id() @unique @default(uuid())
+  userId         String
+  username       String
+  profilePicture String?
+  createdBots    Bot[]              @relation("creator")
+  conversations  Conversation[]     @relation("conversationCreator")
+  documents      DocumentMetadata[] @relation("owner")
+  openAiApiKey   String?
+
+  OAuthProvider OAuthProvider // TODO: don't use this,
+  OAuth         OAuth[] // move to one to many relation for each provider
+
+  @@unique(fields: [OAuthProvider, userId])
+}
+
+model OAuth {
+  id                Int           @id @default(autoincrement())
+  provider          OAuthProvider
+  accountId         String
+  providerAccountId String
+  accessToken       String?
+  refreshToken      String?
+  extra             Json?
+  Account           Account       @relation(fields: [accountId], references: [id])
+
+  @@unique(fields: [provider, providerAccountId])
+}
+
+model TestGoogleDrive {
+  email    String  @id
+  approved Boolean @default(false)
+}
+
+enum BotType {
+  CONVERSATIONAL
+  RETRIEVAL_CONVERSATIONAL
+  AGENT
+}
+
+enum OAuthProvider {
+  GITHUB
+  DISCORD
+  GOOGLE
+}
