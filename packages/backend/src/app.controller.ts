@@ -19,4 +19,22 @@ export class AppController {
     @Request() request: SecureRequest,
   ): Promise<Conversation[]> {
     const creatorId = request.authPayload.uid;
-    return await this.conversationRepository.conversati
+    return await this.conversationRepository.conversations(creatorId);
+  }
+
+  @Get('conversation/:id')
+  async getConversationHistory(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() request: SecureRequest,
+  ): Promise<Conversation> {
+    const creatorId = request.authPayload.uid;
+    const conversation = await this.conversationRepository.getConversationById(
+      id,
+    );
+    if (conversation && conversation.creatorId !== creatorId) {
+      throw new UnauthorizedException();
+    }
+
+    return conversation;
+  }
+}

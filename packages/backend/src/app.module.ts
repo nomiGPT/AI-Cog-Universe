@@ -1,0 +1,17 @@
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { PdfEmbeddingModule } from './modules/pdf-embedding/pdf-embedding.module';
+import { ConfigModule } from '@nestjs/config';
+import { ServicesModule } from './services/services.module';
+import { DocQuestionAnsweringModule } from './modules/doc-question-answering/doc-question-answering.module';
+import { CompletionModule } from 'src/modules/completion/completion.module';
+import { RepositoriesModule } from './repositories/repositories.module';
+import { BotModule } from './modules/bot/bot.module';
+import { DiscordAppModule } from './modules/discord-app/discord-app.module';
+import { LoginModule } from './modules/authentication/login/login.module';
+import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guards/auth/auth.guard';
+import * as dotenv from 'dotenv';
+import { AccountModule } from './modules/account/a
