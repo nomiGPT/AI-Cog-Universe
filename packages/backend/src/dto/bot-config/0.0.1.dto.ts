@@ -80,4 +80,69 @@ export class RcBotDto implements RcBot {
   description: string;
 
   @ApiProperty()
- 
+  type: typeof BotType.RETRIEVAL_CONVERSATIONAL;
+
+  @ApiProperty()
+  configVersion: typeof BOT_CONFIG_VERSION_V0_0_1;
+
+  @ApiProperty()
+  configuration: Prisma.JsonObject & RcBotConfigurationDto;
+
+  @ApiProperty()
+  boundDocumentId: number | null;
+
+  boundDocument: null;
+
+  creatorId: string;
+
+  @ApiProperty()
+  public: boolean;
+}
+
+export class ConversationalBotDto implements ConversationalBot {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  type: typeof BotType.CONVERSATIONAL;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  description: string;
+
+  @ApiProperty()
+  configVersion: typeof BOT_CONFIG_VERSION_V0_0_1;
+
+  @ApiProperty()
+  configuration: Prisma.JsonObject & ConversationalBotConfigurationDto;
+
+  @ApiProperty({ type: 'null', example: null })
+  boundDocumentId: null;
+
+  boundDocument: null;
+
+  creatorId: string;
+
+  @ApiProperty()
+  public: boolean;
+}
+
+export class CreateRcBotDto extends OmitType(RcBotDto, [
+  'id',
+  'boundDocument',
+  'creatorId',
+]) {}
+
+export class CreateConversationalBotDto extends OmitType(ConversationalBotDto, [
+  'id',
+  'boundDocument',
+  'creatorId',
+]) {}
+
+export type BotDto = RcBotDto | ConversationalBotDto;
+
+export type CreateBotDto = CreateConversationalBotDto | CreateRcBotDto;
+
+export type UpdateBotDto = Omit<BotDto, 'boundDocument' | 'creatorId'>;
