@@ -14,4 +14,44 @@ import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth/auth.guard';
 import * as dotenv from 'dotenv';
-import { AccountModule } from './modules/account/a
+import { AccountModule } from './modules/account/account.module';
+import { SlackAppModule } from './modules/slack-app/slack-app.module';
+import { DataSourceModule } from 'src/modules/data-source/data-source.module';
+import { TestRegisterModule } from 'src/modules/test-register/test-register.module';
+
+dotenv.config({ path: './.env.local' });
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env.local'],
+      isGlobal: true, // Makes the ConfigModule global, no need to import it in other modules
+    }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '30d' },
+    }),
+    LoginModule,
+    PdfEmbeddingModule,
+    DocQuestionAnsweringModule,
+    CompletionModule,
+    BotModule,
+    ServicesModule,
+    RepositoriesModule,
+    AccountModule,
+    DiscordAppModule,
+    SlackAppModule,
+    DataSourceModule,
+    TestRegisterModule,
+  ],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
+})
+export class AppModule {}
