@@ -42,4 +42,33 @@ describe('AuthGuard', () => {
   });
 
   it('should activate if public', async () => {
-    reflect
+    reflectorMock.getAllAndOverride.mockReturnValueOnce(true); // isPublic
+    const canActivate = await authGuard.canActivate(executionContextMock);
+    expect(canActivate).toEqual(true);
+  });
+
+  it('should activate when token is valid', async () => {
+    reflectorMock.getAllAndOverride.mockReturnValueOnce(false);
+    jwtServiceMock.verifyAsync.mockResolvedValueOnce({});
+    httpArgumentsHostMock.getRequest.mockReturnValueOnce({
+      headers: {
+        authorization: 'Bearer token',
+      },
+    });
+    const canActivate = await authGuard.canActivate(executionContextMock);
+    expect(canActivate).toEqual(true);
+  });
+
+  it('should throw UnauthorizedException if token is invalid', async () => {
+    reflectorMock.getAllAndOverride.mockReturnValueOnce(false);
+    jwtServiceMock.verifyAsync.mockRejectedValueOnce({});
+    httpArgumentsHostMock.getRequest.mockReturnValueOnce({
+      headers: {
+        authorization: 'Bearer token',
+      },
+    });
+    await expect(() =>
+      authGuard.canActivate(executionContextMock),
+    ).rejects.toThrow(UnauthorizedException);
+  });
+});
