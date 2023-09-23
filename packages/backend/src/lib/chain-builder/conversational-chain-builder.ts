@@ -21,4 +21,26 @@ export class ConversationalChainBuilder extends BaseChainBuilder {
       throw new InternalServerException('Bot type error');
     }
 
-    const llm 
+    const llm = input.llms['lm'];
+    if (!llm) {
+      throw new InternalServerException('model configuration not found');
+    }
+
+    const openAiApiKey = input.keys.openAiApiKey;
+    if (!openAiApiKey) {
+      throw new KeyNotSetException('OpenAI api key');
+    }
+
+    return ConversationalChain.instantiate({
+      template: botConfig.lm.prompt,
+      llm,
+      memory: new BufferMemory({
+        memoryKey: 'chat_history',
+        inputKey: 'question', // The key for the input to the chain
+        outputKey: 'text', // The key for the final conversational output of the chain
+        returnMessages: true, // If using with a chat model
+        chatHistory: input.chatHistory,
+      }),
+    });
+  }
+}
