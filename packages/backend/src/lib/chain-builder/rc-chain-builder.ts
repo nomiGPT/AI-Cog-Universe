@@ -20,4 +20,31 @@ export class RCChainBuilder extends BaseChainBuilder {
       throw new KeyNotSetException('OpenAI api key');
     }
 
-    
+    const retrievalModel = input.llms['retrievalLm'];
+    const conversationModel = input.llms['conversationalLm'];
+    if (!retrievalModel || !conversationModel) {
+      throw Error('Language models not configured');
+    }
+
+    const vectorStore = input.vectorStore;
+    return DocConversationalChain.fromLLM(
+      conversationModel,
+      vectorStore.asRetriever(4),
+      {
+        returnSourceDocuments: true,
+        memory: new BufferMemory({
+          memoryKey: 'chat_history',
+          inputKey: 'question', // The key for the input to the chain
+          outputKey: 'text', // The key for the final conversational output of the chain
+          returnMessages: true, // If using with a chat model
+          chatHistory: input.chatHistory,
+        }),
+        questionGeneratorChainOptions: {
+          llm: retrievalModel,
+          template: botConfig.retrievalLm?.prompt,
+        },
+        conversationTemplate: botConfig.conversationalLm?.prompt,
+      },
+    );
+  }
+}
