@@ -31,4 +31,20 @@ export class ToolBuilder {
           callbacks: callbackManager,
         });
       case 'Dall-e':
-        
+        return new DallETool({
+          callbacks: callbackManager,
+          send: realWorldEffect,
+          openai_api_key: keys?.openAiApiKey,
+        });
+      case 'Retrieval':
+        return new RetrievalTool({
+          callbacks: callbackManager,
+          vectorStoreNamespace: keys.id,
+        });
+      case 'Options':
+        return OptionsTool.create(realWorldEffect, callbackManager);
+      default:
+        throw new InternalServerException('Tool not supported');
+    }
+  }
+}
