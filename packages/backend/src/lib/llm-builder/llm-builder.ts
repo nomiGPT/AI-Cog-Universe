@@ -22,4 +22,12 @@ export class LlmBuilder {
       case 'gpt-3.5-turbo-1106':
         return new OpenAI({
           modelName: lmConfig.modelName,
-          openAIApiKey: keys.open
+          openAIApiKey: keys.openAiApiKey,
+          streaming: true,
+          callbacks: callbackManager,
+        });
+      default:
+        throw new LanguageModelNotSupportedException();
+    }
+  }
+}
