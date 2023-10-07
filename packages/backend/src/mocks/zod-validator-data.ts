@@ -38,4 +38,6 @@ export const ZOD_VALIDATION_TEST_CASES = [
   {
     description: 'invalid input',
     input: INVALID_INPUT_1,
-    valid: fals
+    valid: false,
+  },
+];
