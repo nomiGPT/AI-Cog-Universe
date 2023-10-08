@@ -43,4 +43,47 @@ describe('LoginController', () => {
         },
         {
           provide: LoginService,
-          us
+          useValue: loginServiceMock,
+        },
+      ],
+    }).compile();
+
+    controller = module.get<LoginController>(LoginController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+
+  it('should call githubOauthService.loginWithGithub', () => {
+    const code = 'code';
+    controller.githubLogin({ code });
+    expect(githubOauthServiceMock.loginWithGithub).toHaveBeenCalledWith(code);
+  });
+
+  it('should call discordOauthService.loginWithDiscord', () => {
+    const code = 'code';
+    controller.discordLogin({ code });
+    expect(discordOauthServiceMock.loginWithDiscord).toHaveBeenCalledWith(code);
+  });
+
+  it('should call loginService.validate', () => {
+    const access_token = 'access_token';
+    controller.validate(access_token);
+    expect(loginServiceMock.validate).toHaveBeenCalledWith(access_token);
+  });
+
+  it('should retrieve account info', async () => {
+    const request = {
+      authPayload: AUTH_PAYLOAD_MOCK,
+    };
+    accountRepositoryMock.getAccountById.mockResolvedValueOnce(
+      MOCK_ACCOUNT as any,
+    );
+    const info = await controller.getAccountInfo(request);
+    expect(accountRepositoryMock.getAccountById).toHaveBeenCalledWith(
+      request.authPayload.uid,
+    );
+    expect(info).toEqual(MOCK_ACCOUNT);
+  });
+});
