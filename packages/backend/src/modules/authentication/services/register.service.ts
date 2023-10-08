@@ -13,3 +13,25 @@ export class RegisterService {
     private readonly accountRepository: AccountRepository,
     private readonly loginService: GithubOAuthService,
   ) {}
+
+  async registerGithubUser(code: string) {
+    const login = await this.loginService.loginWithGithub(code);
+    const response = await axios<UserResponse>({
+      method: 'get',
+      url: `https://api.github.com/user`,
+      headers: {
+        Authorization: 'token ' + login.access_token,
+      },
+    });
+    return this.saveGithubUser(response.data);
+  }
+
+  async saveGithubUser(githubUser: UserResponse) {
+    return this.accountRepository.registerAccount({
+      userId: githubUser.id + '',
+      username: githubUser.name,
+      profilePicture: githubUser.avatar_url,
+      OAuthProvider: OAuthProvider.GITHUB,
+    });
+  }
+}
