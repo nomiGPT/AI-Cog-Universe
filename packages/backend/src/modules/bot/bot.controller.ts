@@ -62,4 +62,16 @@ export class BotController {
     @Param('id', ParseIntPipe) botId: number,
     @Request() request: SecureRequest,
   ) {
-    const creato
+    const creatorId = request.authPayload.uid;
+    const bot = await this.agentService.getBotById(botId);
+    if (bot && !bot.public && bot.creatorId !== creatorId) {
+      throw new UnauthorizedException();
+    }
+    return bot;
+  }
+
+  @Get()
+  async getBots(@Request() request: SecureRequest) {
+    return this.agentService.getBotsByCreatorId(request.authPayload.uid);
+  }
+}
