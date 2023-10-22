@@ -75,4 +75,58 @@ const lmConfigValidation = z.object({
   apiKey: z.string().optional(),
 });
 
-// ====================================
+// ======================================================
+
+const rcConfigBotValidation = baseBotConfigValidation.extend({
+  type: z.enum([BotType.RETRIEVAL_CONVERSATIONAL], {
+    errorMap: () => ({ message: 'Bot type error!' }),
+  }),
+  retrievalLm: lmConfigValidation,
+  conversationalLm: lmConfigValidation,
+});
+
+const conversationalBotConfigValidation = baseBotConfigValidation.extend({
+  type: z.enum([BotType.CONVERSATIONAL], {
+    errorMap: () => ({ message: 'Bot type error!' }),
+  }),
+  lm: lmConfigValidation,
+});
+
+const agentConfigValidation = baseBotConfigValidation.extend({
+  type: z.enum([BotType.AGENT], {
+    errorMap: () => ({ message: 'Bot type error!' }),
+  }),
+  lm: lmConfigValidation,
+});
+
+// ======================================================
+
+const conversationBotValidation = botBaseValidation.extend({
+  type: z.enum([BotType.CONVERSATIONAL], {
+    errorMap: () => ({ message: 'Bot type error!' }),
+  }),
+  configuration: conversationalBotConfigValidation,
+});
+
+const rcBotValidation = botBaseValidation.extend({
+  type: z.enum([BotType.RETRIEVAL_CONVERSATIONAL], {
+    errorMap: () => ({ message: 'Bot type error!' }),
+  }),
+  configuration: rcConfigBotValidation,
+  boundDocumentId: z.number().nullable(),
+});
+
+const agentBotConfigValidation = botBaseValidation.extend({
+  type: z.enum([BotType.AGENT], {
+    errorMap: () => ({ message: 'Bot type error!' }),
+  }),
+  configuration: agentConfigValidation,
+});
+
+export const botValidation = z.union([
+  rcBotValidation,
+  conversationBotValidation,
+  agentBotConfigValidation,
+]);
+
+export const updateBotValidation
