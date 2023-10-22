@@ -129,4 +129,8 @@ export const botValidation = z.union([
   agentBotConfigValidation,
 ]);
 
-export const updateBotValidation
+export const updateBotValidation = z.union([
+  rcBotValidation.extend({ id: z.number() }),
+  conversationBotValidation.extend({ id: z.number() }),
+  agentBotConfigValidation.extend({ id: z.number() }),
+]);
