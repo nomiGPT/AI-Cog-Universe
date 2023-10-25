@@ -63,4 +63,64 @@ export class AgentService extends BaseChainStream {
         this.logger.log('handleToolStart', input, JSON.stringify(_, null, 2));
         subject.next({
           content: input,
-          conversati
+          conversationId: conversation.id,
+          fromType: 'ai',
+          type: 'idea',
+          fromId: bot.id,
+        });
+      },
+      handleToolEnd(
+        output: string,
+        runId: string,
+        parentRunId?: string,
+        tags?: string[],
+      ) {
+        console.log('handleToolEnd', output, runId, parentRunId, tags);
+      },
+    });
+
+    const dalleCallbackManager = CallbackManager.fromHandlers({
+      handleToolStart: (_, input: string) => {
+        console.log('handle dalle generation start');
+        subject.next({
+          content: 'generating image...',
+          conversationId: conversation.id,
+          fromType: 'ai',
+          type: 'generating',
+          fromId: bot.id,
+        });
+      },
+    });
+
+    const dalleCallback = (imageUrl: string) => {
+      this.logger.log('generated_image: dalle callback');
+      subject.next({
+        content: imageUrl,
+        conversationId: conversation.id,
+        fromType: 'ai',
+        type: 'generated_image',
+        fromId: bot.id,
+      });
+    };
+
+    const uiCallbacks = (ui: any) => {
+      console.log('ui', ui);
+      subject.next({
+        content: ui,
+        conversationId: conversation.id,
+        fromType: 'ai',
+        type: 'ui',
+        fromId: bot.id,
+      });
+    };
+
+    const chain = await this.agent.fromConversation(
+      conversation,
+      callbackManager,
+      toolsCallbackManager,
+      uiCallbacks,
+      dalleCallbackManager,
+      dalleCallback,
+    );
+
+    const chainValues = 
