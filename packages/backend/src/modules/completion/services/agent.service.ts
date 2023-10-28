@@ -123,4 +123,17 @@ export class AgentService extends BaseChainStream {
       dalleCallback,
     );
 
-    const chainValues = 
+    const chainValues = await chain.invoke({
+      question,
+    });
+
+    console.log('chainValues', JSON.stringify(chainValues, null, 2));
+    // subject.next({
+    //   content: chainValues.output,
+    //   conversationId: conversation.id,
+    //   fromType: 'ai',
+    //   type: 'message',
+    //   fromId: bot.id,
+    // });
+  }
+}
