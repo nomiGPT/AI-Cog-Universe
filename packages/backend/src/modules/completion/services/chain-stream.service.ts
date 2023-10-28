@@ -13,4 +13,16 @@ export class ChainStreamService {
     private agentService: AgentService,
   ) {}
 
-  getService(type: 
+  getService(type: BotType) {
+    switch (type) {
+      case BotType.RETRIEVAL_CONVERSATIONAL:
+        return this.rcService;
+      case BotType.CONVERSATIONAL:
+        return this.conversationalService;
+      case BotType.AGENT:
+        return this.agentService;
+      default:
+        throw new BotTypeNotSupportedException();
+    }
+  }
+}
