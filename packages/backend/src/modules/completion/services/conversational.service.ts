@@ -27,4 +27,34 @@ export class ConversationalService extends BaseChainStream {
       throw Error('Bot is not of the Conversational type');
     }
 
-    const callbackManager: CallbackManager = CallbackManager.fromHan
+    const callbackManager: CallbackManager = CallbackManager.fromHandlers({
+      handleLLMNewToken: (token) => {
+        subject.next({
+          content: token,
+          conversationId: conversation.id,
+          fromType: 'ai',
+          type: 'response-token',
+          fromId: conversation.bot.id,
+        });
+      },
+    });
+
+    const chain = this.conversationalChainService.fromConversation(
+      conversation,
+      callbackManager,
+    );
+
+    const chainValues = await chain.invoke({
+      question,
+      chat_history: this.chatHistoryBuilder.build(conversation.chatHistory),
+    });
+
+    subject.next({
+      content: chainValues.text,
+      conversationId: conversation.id,
+      fromType: 'ai',
+      type: 'message',
+      fromId: bot.id,
+    });
+  }
+}
