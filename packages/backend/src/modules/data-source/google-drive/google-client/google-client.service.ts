@@ -59,4 +59,12 @@ export class GoogleClientService extends OAuth2Client {
   }
 
   async removeDeprecatedToken() {
-    this.oAuth = await this.accountRepo.removeDeprecatedTo
+    this.oAuth = await this.accountRepo.removeDeprecatedToken(
+      this.req.authPayload.uid,
+    );
+  }
+
+  get oAuthData() {
+    return this.oAuth;
+  }
+}
