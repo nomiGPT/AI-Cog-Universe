@@ -1,15 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ResetHistoryService } from './reset-history.service';
 
-describe('ResetHistoryService', () => {
-  let service: ResetHistoryService;
+import { Test, TestingModule } from '@nestjs/testing';
+import { DiscordAppService } from './discord-app.service';
+
+describe('DiscordService', () => {
+  let service: DiscordAppService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ResetHistoryService],
+      providers: [DiscordAppService],
     }).compile();
 
-    service = module.get<ResetHistoryService>(ResetHistoryService);
+    service = module.get<DiscordAppService>(DiscordAppService);
   });
 
   it('should be defined', () => {
