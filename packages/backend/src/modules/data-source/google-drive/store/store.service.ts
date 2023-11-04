@@ -61,4 +61,13 @@ export class StoreService {
     const pineconeIndex = await this.pineconeService.getIndex();
     const store = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex,
-      namespace: this.req.authPayload.uid
+      namespace: this.req.authPayload.uid,
+    });
+
+    const result = await store
+      .asRetriever(1)
+      .getRelevantDocuments('WHAT DID WE DO IN THE SCRUM PROCESS?');
+
+    console.log('Testing result', result);
+  }
+}
