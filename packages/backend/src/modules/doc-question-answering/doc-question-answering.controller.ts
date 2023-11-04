@@ -44,4 +44,10 @@ export class DocQuestionAnsweringController {
           subscriber.next({ data: END_COMPLETION });
           subscriber.complete();
         })
-        .catch((e
+        .catch((error) => {
+          this.logger.error('Completion api error', error);
+          subscriber.error(error);
+        });
+    });
+  }
+}
