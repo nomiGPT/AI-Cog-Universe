@@ -6,4 +6,13 @@ describe('PdfEmbeddingController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PdfEmbeddingControl
+      controllers: [PdfEmbeddingController],
+    }).compile();
+
+    controller = module.get<PdfEmbeddingController>(PdfEmbeddingController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
