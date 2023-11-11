@@ -216,3 +216,31 @@ export class SlackAppService extends BaseThirdPartyApp {
 
     return {
       id: message.ts,
+      createdAt: new Date(parseFloat(message.ts) * 1000),
+      content: parsedMessage.bot + ' ' + parsedMessage.question,
+      isBot: false,
+      authorId: message.user,
+      username,
+      slackConversationId: message.channel,
+      botId: null,
+    };
+  }
+
+  private parseMessage(content: string): {
+    mentioned: string;
+    bot: string;
+    question: string;
+  } {
+    const match = SLACK_MESSAGE_REQUEST_REGEX.exec(content);
+
+    if (match) {
+      return {
+        mentioned: match[1],
+        bot: match[2],
+        question: match[3],
+      };
+    } else {
+      return null;
+    }
+  }
+}
