@@ -14,4 +14,16 @@ export class PdfEmbeddingService {
       title: file.originalname,
       size: file.size,
       url: 'https://www.example.com',
-      embeddingStatus: 'pe
+      embeddingStatus: 'pending',
+      owner: {
+        connect: {
+          id: ownerId,
+        },
+      },
+    });
+  }
+
+  getDocumentListByOwnerId(ownerId: string) {
+    return this.documentMetadataRepository.getDocumentListByOwnerId(ownerId);
+  }
+}
