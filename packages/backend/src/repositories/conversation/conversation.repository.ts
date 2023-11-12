@@ -28,4 +28,70 @@ export class ConversationRepository {
         create: [],
       },
       bot: {
-    
+        connect: {
+          id: data.botId,
+        },
+      },
+      document: data.documentId && {
+        connect: {
+          id: data.documentId,
+        },
+      },
+      creator: {
+        connect: {
+          id: creatorId,
+        },
+      },
+    };
+
+    return this.prisma.conversation.create({
+      data: conversationData,
+      include: {
+        creator: true,
+        chatHistory: true,
+        bot: {
+          include: {
+            boundDocument: true,
+          },
+        },
+        document: true,
+      },
+    }) as unknown as Promise<Conversation>;
+  }
+  async conversationHistory(id: number) {
+    return this.prisma.conversation.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        chatHistory: {
+          orderBy: {
+            id: 'asc',
+          },
+        },
+      },
+    });
+  }
+
+  async getConversationById(id: number): Promise<Conversation> {
+    return this.prisma.conversation.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        creator: true,
+        chatHistory: {
+          orderBy: {
+            id: 'asc',
+          },
+        },
+        bot: {
+          include: {
+            boundDocument: true,
+          },
+        },
+        document: true,
+      },
+    }) as unknown as Promise<Conversation>;
+  }
+}
