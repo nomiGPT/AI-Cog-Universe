@@ -17,4 +17,17 @@ describe(`ZodValidationPipe`, () => {
   });
 
   it.each(ZOD_VALIDATION_TEST_CASES)(
-    `should validate input -> test case: $# is valid:
+    `should validate input -> test case: $# is valid: $valid`,
+    ({ valid, input }) => {
+      if (valid) {
+        const parsed = pipe.transform(input, ZOD_VALIDATION_MOCK_METADATA);
+        expect(parsed).toEqual(input);
+        return;
+      }
+
+      expect(() => pipe.transform(input, ZOD_VALIDATION_MOCK_METADATA)).toThrow(
+        BadRequestException,
+      );
+    },
+  );
+});
