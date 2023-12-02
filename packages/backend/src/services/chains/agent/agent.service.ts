@@ -52,4 +52,30 @@ export class AgentService extends AgentBuilder {
     serpTool.callbacks = toolsCallbackManager;
     const wolframAlpha = new WolframAlphaTool({
       appid: process.env.WALPHA_APP_ID,
-      callbacks: toolsCallbackManage
+      callbacks: toolsCallbackManager,
+    });
+    const dalle = new DallETool({
+      callbacks: dalleCallbackManager,
+      openai_api_key: conversation.creator.openAiApiKey,
+      send: dalleCallback,
+    });
+    const retrievalTool = new RetrievalTool({
+      callbacks: toolsCallbackManager,
+      vectorStoreNamespace: conversation.creator.id,
+    });
+    const options = OptionsTool.create(async (input) => {
+      uiCallbacks(this.createUIElement('button_group', input));
+      return true;
+    });
+    const tools = [serpTool, wolframAlpha, dalle, retrievalTool];
+    const modelWithTools = model.bind({
+      tools: tools.map(formatToOpenAITool),
+    });
+    return createAgent(
+      conversation.bot,
+      modelWithTools,
+      tools,
+      this.chatHistoryBuilder.build(conversation.chatHistory),
+    );
+  }
+}
