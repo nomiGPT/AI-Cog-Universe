@@ -6,4 +6,15 @@ describe('ConversationalService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      prov
+      providers: [ConversationalChainService],
+    }).compile();
+
+    service = module.get<ConversationalChainService>(
+      ConversationalChainService,
+    );
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
