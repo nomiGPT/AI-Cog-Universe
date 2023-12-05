@@ -40,4 +40,36 @@ export class ChatHistoryBuilderService {
   }
 
   buildFromDiscord(chatHistory: DiscordMessage[]): ChatMessageHistory {
-    
+    const messages = chatHistory.map((message) => {
+      switch (message.isBot) {
+        case false:
+          return ChatMessage.createHumanMessage(
+            message.content,
+            message.username,
+          );
+        case true:
+          return ChatMessage.createAIMessage(message.content, message.username);
+        default:
+          throw new MessageTypeNotSupportedException();
+      }
+    });
+    return new ChatMessageHistory(messages);
+  }
+
+  buildFromSlack(chatHistory: SlackMessage[]): ChatMessageHistory {
+    const messages = chatHistory.map((message) => {
+      switch (message.isBot) {
+        case false:
+          return ChatMessage.createHumanMessage(
+            message.content,
+            message.username,
+          );
+        case true:
+          return ChatMessage.createAIMessage(message.content, message.username);
+        default:
+          throw new MessageTypeNotSupportedException();
+      }
+    });
+    return new ChatMessageHistory(messages);
+  }
+}
