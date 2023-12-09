@@ -3,4 +3,9 @@ import { DocumentMetadata } from '@prisma/client';
 
 @Injectable()
 export class DocumentNamespaceService {
-  getDocum
+  getDocumentNamespace(document: DocumentMetadata) {
+    return (
+      document.id.toString() + '_' + document.embeddedAt.getTime().toString()
+    );
+  }
+}
