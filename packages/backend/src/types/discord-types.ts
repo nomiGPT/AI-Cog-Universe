@@ -5,4 +5,7 @@ export type AccessTokenResponse = {
 };
 
 export type UserResponse = {
-  id
+  id: string;
+  username: string;
+  avatar: string | null;
+};
