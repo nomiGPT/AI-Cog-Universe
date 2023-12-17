@@ -54,4 +54,35 @@ const ChipsInput: FunctionComponent<Props> = ({
               if (textInputRef.current?.value) {
                 addItem(textInputRef.current.value)
                 textInputRef.current.value = ''
-              
+              }
+            }}
+          >
+            Add
+          </Button>
+        </div>
+      </FormFieldWrapper>
+      {fieldError?.message && <div className={styles.error}>{fieldError.message}</div>}
+      <div>
+        {Array
+          .from(selectedItems)
+          .map((item) => (
+            <div key={item} className={styles.item}>
+              <span>{item}</span>
+              <button
+                onClick={() => {
+                  deleteItem(item)
+                }}
+              >
+                <XCircleIcon width={24} height={24} />
+              </button>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  );
+}
+
+
+
+export default ChipsInput;
