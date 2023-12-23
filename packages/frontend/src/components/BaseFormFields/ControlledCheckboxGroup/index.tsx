@@ -10,4 +10,25 @@ type Props = {
   onChange: (option: LabelValuePair[]) => void
 }
 
-const ControlledCheckboxGroup: Fun
+const ControlledCheckboxGroup: FunctionComponent<Props> = ({options, checkedOptions, onChange}) => {
+  const {isChecked, handleChange} = useOptionsSelection(checkedOptions, onChange);
+
+  return (
+    <div className={styles.CheckboxGroup}>
+      {options.map((option) => (
+        <Checkbox
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const checked = e.target.checked;
+            handleChange(option, checked)
+          }}
+          checked={isChecked(option.value)} key={option.value} id={option.value}
+        >
+          {option.label}
+        </Checkbox>
+        )
+      )}
+    </div>
+  );
+}
+
+export default ControlledCheckboxGroup;

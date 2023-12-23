@@ -1,0 +1,16 @@
+.OptionSelection {
+  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, calc(33.33% - calc(2rem / 3)));
+}
+
+.option {
+  border: 1px solid var(--primary-border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: rgba(var(--color-2-rgb), 0.1);
+  border-color: var(--color-2);
+}
