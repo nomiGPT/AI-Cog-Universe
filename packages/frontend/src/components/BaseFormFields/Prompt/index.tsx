@@ -28,4 +28,20 @@ const Prompt: FunctionComponent<Props> = forwardRef<HTMLTextAreaElement, Props>(
         )}
       />
       {placeholders?.length && <div className={styles.placeholders}>
-        <span>Should contain the 
+        <span>Should contain the following placeholders:</span>
+        {placeholders.map((placeholder, index) => (
+          <div
+            key={placeholder}
+            className={clsx(styles.promptPlaceholder)}
+          >
+            {placeholder}
+          </div>
+        ))}
+      </div>}
+    </div>
+  );
+});
+
+Prompt.displayName = 'Prompt';
+
+export default Prompt;
