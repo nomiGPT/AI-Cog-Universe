@@ -61,4 +61,24 @@ const SelectView: FunctionComponent<Props> = (props) => {
       <Portal target={'select-overlay'}>
         <div ref={setPopperElement} style={{...popperStyles.popper}} {...attributes.popper}>
           <ul {...getMenuProps({}, {suppressRefError: true})} className={clsx(styles.list, !isOpen && styles.hidden)}>
-            {isOpen && props.options.map(
+            {isOpen && props.options.map((option, index) => (
+              <li
+                key={option.value}
+                {...getItemProps({item: option, index})}
+                className={clsx(
+                  selectedItem === option && styles.selected,
+                  highlightedIndex === index && styles.highlighted,
+                  styles.option
+                )}
+              >
+                <span>{option.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Portal>
+    </div>
+  );
+}
+
+export default SelectView;
