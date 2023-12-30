@@ -20,4 +20,6 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   );
 });
 
-Te
+TextInput.displayName = 'TextInput';
+
+export default TextInput;
