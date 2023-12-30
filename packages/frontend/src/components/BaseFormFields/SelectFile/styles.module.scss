@@ -7,4 +7,18 @@
 
 .ImportFile > span {
   display: flex;
-  a
+  align-items: center;
+  span, svg {
+    display: inline-block;
+    line-height: 1.5rem;
+  }
+  svg {
+    margin-left: 0.25rem;
+  }
+}
+
+.error {
+  color: var(--input-error);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
