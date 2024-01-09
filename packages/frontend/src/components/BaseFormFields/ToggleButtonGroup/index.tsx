@@ -19,4 +19,13 @@ const ToggleButtonGroup: FunctionComponent<Props> = (props) => {
               key={value}
               onClick={() => props.onChange(value)}
               variant={props.selected === value ? 'outlined' : 'primary'}
-      
+              className={styles.button}
+            >
+              {label}
+            </Button>
+          ))
+      }
+    </div>);
+}
+
+export default ToggleButtonGroup;
