@@ -30,4 +30,30 @@ const Agent: FunctionComponent<Props> = (props) => {
   });
 
   const onSubmit = useSubmit({
-    onSubmit: (data: InputType) => pr
+    onSubmit: (data: InputType) => props.onSubmit(getNewBot(data))
+  })
+
+  return (
+    <form onSubmit={form.handleSubmit(onSubmit)} className={styles.formWrapper}>
+      <Portal target={'create-bot-right-sidebar'}>
+        <Steps
+          currentStep={NaN}
+          steps={props.update ? UPDATE_STEPS : STEPS}
+          insight={props.update ? UPDATE_INSIGHT : INSIGHT}
+        />
+      </Portal>
+      <BotInfo
+        form={form as any}
+      />
+      <ConversationalConfig
+        form={form as any}
+      />
+      <Integration
+        form={form as any}
+      />
+      <FormCTAs onBack={router.back} />
+    </form>
+  )
+}
+
+export default Agent;
