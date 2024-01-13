@@ -6,4 +6,10 @@ import { z } from "zod";
 
 const schema = z.object({
   botInfo: botInfoSchema,
-  botConfig: 
+  botConfig: botConfigSchema,
+  integration: integrationSchema,
+})
+
+export type InputType = z.infer<typeof schema>
+
+export default schema;
