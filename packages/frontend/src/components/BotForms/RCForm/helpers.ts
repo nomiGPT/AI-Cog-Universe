@@ -9,4 +9,35 @@ export function getNewBot(data: InputType): NewBot {
     type: BotType.RETRIEVAL_CONVERSATIONAL,
     configVersion: BOT_CONFIG_VERSION_LATEST,
     configuration: {
-      nam
+      name: botInfo.name,
+      version: BOT_CONFIG_VERSION_LATEST,
+      type: BotType.RETRIEVAL_CONVERSATIONAL,
+      description: botInfo.description ?? '',
+      avatar: {
+        type: BotAvatarType.BOT_AVATAR_EMOTE,
+        backgroundColor: botInfo.color,
+      },
+      retrievalLm: {
+        modelName: botConfig.rLlm,
+        prompt: botConfig.rlmPrompt,
+        apiKey: botConfig.rApiKey,
+      },
+      conversationalLm: {
+        modelName: botConfig.cLlm,
+        prompt: botConfig.clmPrompt,
+        apiKey: botConfig.cApiKey,
+      },
+      thirdPartyIntegration: {
+        discord: integration.integrateWithDiscord && integration.discordChannelIds ? {
+          isPrivate: true,
+          allowedChannels: integration.discordChannelIds,
+        } : undefined,
+        slack: integration.integrateWithSlack && integration.slackChannelIds ? {
+          allowedChannels: integration.slackChannelIds,
+        } : undefined,
+      }
+    },
+    boundDocumentId: botInfo.isBoundToDocument ? botInfo.boundDocumentId ?? null : null,
+    public: botInfo.isPublic,
+  }
+}
