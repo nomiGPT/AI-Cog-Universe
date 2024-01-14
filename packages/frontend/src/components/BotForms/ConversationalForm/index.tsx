@@ -44,3 +44,18 @@ const ConversationalSteps: FunctionComponent<Props> = (props) => {
           insight={props.update ? UPDATE_INSIGHT : INSIGHT}
         />
       </Portal>
+      <BotInfo
+        form={form as any}
+      />
+      <ConversationalConfig
+        form={form as any}
+      />
+      <Integration
+        form={form as any}
+      />
+      <FormCTAs onBack={router.back} />
+    </form>
+  )
+}
+
+export default ConversationalSteps;
