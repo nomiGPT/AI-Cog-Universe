@@ -57,4 +57,25 @@ const BotInfo: FunctionComponent<Props> = (props) => {
       </FormFieldWrapper>
       <FormFieldWrapper
         htmlFor={'description'}
- 
+        label={'Description'}
+        fieldError={errors.botInfo?.description}
+      >
+        <TextInput
+          id={'description'}
+          placeholder={'Provide a description for your bot'}
+          hasError={!!errors.botInfo?.description}
+          autoComplete={'off'}
+          {...register('botInfo.description', {required: true})}
+        />
+      </FormFieldWrapper>
+      <Checkbox
+        id={'is-public'}
+        {...register('botInfo.isPublic', {required: true})}
+      >
+        Should this bot be public?
+      </Checkbox>
+    </section>
+  );
+}
+
+export default BotInfo;
