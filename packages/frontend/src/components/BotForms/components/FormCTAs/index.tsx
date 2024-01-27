@@ -18,4 +18,15 @@ const FormCTAs: FunctionComponent<Props> = ({
   loading
                                             }) => {
   return (
-    <
+    <section className={styles.actions}>
+      <Button onClick={onBack} type={onBack ? 'button' : 'submit'} variant={'outlined'} id={'back'}>
+        {backLabel || 'Back'}
+      </Button>
+      <Button disabled={loading} onClick={onNext} type={onNext ? 'button' : 'submit'} id={'next'}>
+        {forwardLabel || 'Next'}
+      </Button>
+    </section>
+  );
+}
+
+export default FormCTAs;
