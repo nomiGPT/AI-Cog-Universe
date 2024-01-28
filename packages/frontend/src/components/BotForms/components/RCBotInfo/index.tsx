@@ -66,4 +66,40 @@ const BotInfo: FunctionComponent<Props> = (props) => {
       >
         <TextInput
           id={'description'}
-          placeholder={'Provide a description for yo
+          placeholder={'Provide a description for your bot'}
+          hasError={!!errors.botInfo?.description}
+          autoComplete={'off'}
+          {...register('botInfo.description', {required: true})}
+        />
+      </FormFieldWrapper>
+      <Checkbox
+        id={'bind-document'}
+        {...register('botInfo.isBoundToDocument', {required: true})}
+      >
+        Bind document?
+      </Checkbox>
+      {isBoundToDocument && (
+        <Controller
+          control={control}
+          name={'botInfo.boundDocumentId'}
+          defaultValue={undefined}
+          render={({field: {onChange, value}}) => (
+            <EmbeddedDocumentsSelector
+              onChange={onChange}
+              selectedDocumentId={value}
+              fieldError={errors.botInfo?.boundDocumentId}
+            />
+          )}
+        />
+      )}
+      <Checkbox
+        id={'is-public'}
+        {...register('botInfo.isPublic', {required: true})}
+      >
+        Should this bot be public?
+      </Checkbox>
+    </section>
+  );
+}
+
+export default BotInfo;
