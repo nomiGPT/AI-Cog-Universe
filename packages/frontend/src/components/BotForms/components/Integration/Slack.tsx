@@ -27,4 +27,26 @@ const Slack: FunctionComponent<Props> = ({
         {...register('integration.integrateWithSlack', {required: true})}
       >
         <span>Integrate with Slack?</span>
-      </Checkb
+      </Checkbox>
+      {integrateWithSlack && (
+        <Controller
+          control={control}
+          name={'integration.slackChannelIds'}
+          defaultValue={[]}
+          render={({field: {onChange, value}}) => (
+            <ChipsInput
+              value={value || []}
+              onChange={onChange}
+              fieldError={errors.integration?.slackChannelIds}
+              label={'Allowed Slack channel ids'}
+              id={'slack-channel-ids'}
+              placeholder={'Provide a slack channel id'}
+            />
+          )}
+        />
+      )}
+    </div>
+  );
+}
+
+export default Slack;
