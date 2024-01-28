@@ -33,4 +33,27 @@ const Discord: FunctionComponent<Props> = ({
         id={'integrate-with-discord'}
         {...register('integration.integrateWithDiscord', {required: true})}
       >
-        <span>Integrate with Discord?</sp
+        <span>Integrate with Discord?</span>
+      </Checkbox>
+      {integrateWithDiscord && (
+        <Controller
+          control={control}
+          name={'integration.discordChannelIds'}
+          defaultValue={[]}
+          render={({field: {onChange, value}}) => (
+            <ChipsInput
+              value={value || []}
+              onChange={onChange}
+              fieldError={errors.integration?.discordChannelIds}
+              label={'Allowed discord channel ids'}
+              id={'discord-channel-ids'}
+              placeholder={'Provide a discord channel id'}
+            />
+          )}
+        />
+      )}
+    </div>
+  );
+}
+
+export default Discord;
