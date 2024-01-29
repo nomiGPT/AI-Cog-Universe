@@ -50,4 +50,39 @@ const BotDetails: FunctionComponent<Props> = ({
         {data.configuration.type === BotType.CONVERSATIONAL && data.configuration.lm?.apiKey && (
           <DetailsItem
             label={'api key'}
-   
+            valueClassName={styles.ellipsis}
+            value={data.configuration.lm.apiKey}
+          />
+        )}
+
+        {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.retrievalLm?.prompt && (
+          <DetailsItem
+            label={'custom Retrieval Prompt'}
+            valueClassName={styles.ellipsis}
+            value={data.configuration.retrievalLm.prompt}
+          />
+        )}
+        {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.retrievalLm?.modelName && (
+          <DetailsItem
+            label={'retrieval language model'}
+            valueClassName={styles.ellipsis}
+            value={data.configuration.retrievalLm.modelName}
+          />
+        )}
+        {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.retrievalLm?.apiKey && (
+          <DetailsItem
+            label={'retrieval api key'}
+            valueClassName={styles.ellipsis}
+            value={data.configuration.retrievalLm.apiKey}
+          />
+        )}
+
+        {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.conversationalLm?.prompt && (
+          <DetailsItem
+            label={'custom conversational prompt'}
+            valueClassName={styles.ellipsis}
+            value={data.configuration.conversationalLm.prompt}
+          />
+        )}
+        {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.conversationalLm?.modelName && (
+          
