@@ -19,4 +19,11 @@ const GridItem: FunctionComponent<Props> = ({
         <div className={styles.information}>
           <span><strong>{bot.name}</strong></span>
           <span>{bot.type}</span>
-          <span className={styles.descr
+          <span className={styles.description}>{bot.description}</span>
+        </div>
+      </section>
+    </Link>
+  );
+}
+
+export default GridItem;
