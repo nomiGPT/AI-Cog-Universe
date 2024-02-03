@@ -28,3 +28,18 @@
   width: 1.75rem;
   height: 1.75rem;
   text-align: center;
+  line-height: 1.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--primary-foreground);
+}
+
+.current .stepNumber {
+  background-color: var(--color-2);
+  color: var(--inverse-foregraound);
+  border: none;
+}
+
+.current h3 {
+  color: var(--color-2);
+}
+
