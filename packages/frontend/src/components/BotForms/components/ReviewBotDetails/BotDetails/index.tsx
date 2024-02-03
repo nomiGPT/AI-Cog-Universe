@@ -85,4 +85,22 @@ const BotDetails: FunctionComponent<Props> = ({
           />
         )}
         {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.conversationalLm?.modelName && (
-          
+          <DetailsItem
+            label={'conversational language model'}
+            valueClassName={styles.ellipsis}
+            value={data.configuration.conversationalLm.modelName}
+          />
+        )}
+        {data.configuration.type === BotType.RETRIEVAL_CONVERSATIONAL && data.configuration.conversationalLm?.apiKey && (
+          <DetailsItem
+            label={'conversational api key'}
+            valueClassName={styles.ellipsis}
+            value={data.configuration.conversationalLm.apiKey}
+          />
+        )}
+      </div>
+    </section>
+  );
+}
+
+export default BotDetails;
