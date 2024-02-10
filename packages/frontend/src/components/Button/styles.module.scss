@@ -41,4 +41,20 @@
 .danger:hover {
   background-color: var(--danger-color);
   color: var(--white);
-  bo
+  border-color: var(--white);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-button-focus-outline);
+}
+
+.button:active {
+  box-shadow: 0 0 0 2px var(--primary-button-focus-outline);
+}
+
+.button:disabled {
+  background-color: var(--disabled-button-background);
+  color: var(--disabled-button-foreground);
+  box-shadow: none;
+}
