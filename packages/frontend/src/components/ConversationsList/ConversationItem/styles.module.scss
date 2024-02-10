@@ -23,4 +23,9 @@
   box-shadow: 0 0 0 3px var(--primary-button-focus-outline);
 }
 
-.conversa
+.conversationItem > :last-child {
+  // disable wrapping
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
