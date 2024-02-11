@@ -49,4 +49,41 @@ const EmbedPdfForm: FunctionComponent = (props) => {
         label={'Block size'}
         fieldError={errors.blockSize}
       >
-        <TextInp
+        <TextInput
+          {...register('blockSize', {required: true})}
+          id="block_size"
+          type={'number'}
+          inputMode={'numeric'}
+          min={0}
+          placeholder={'Provide block size'}
+        />
+      </FormFieldWrapper>
+      <FormFieldWrapper
+        htmlFor="overlap"
+        label={'Overlap'}
+        fieldError={errors.overlap}
+      >
+        <TextInput
+          {...register('overlap', {required: true})}
+          id="overlap"
+          type={'number'}
+          inputMode={'numeric'}
+          min={0}
+          placeholder={'Provide overlap'}
+        />
+      </FormFieldWrapper>
+      <SelectFile
+        {...register('files', {required: true})}
+        label={'Select PDF'}
+        accept={'application/pdf'}
+        id="select_file"
+        fieldError={errors.files}
+      />
+      {selectedFile && <div className={styles.selectedFile}><span>{selectedFile}<DocumentCheckIcon width={24} height={24} /></span></div>}
+      {uploadStatus && <div className={styles.progress}>{uploadStatus}</div>}
+      <Button className={styles.button} type="submit" disabled={isProcessing}>Embed</Button>
+    </form>
+  );
+}
+
+export default EmbedPdfForm;
