@@ -16,4 +16,8 @@ const DebugDocs: FunctionComponent<DebugDocs> = ({ docs }) => {
 export default DebugDocs
 
 
-function parseDe
+function parseDebug(debug: any) {
+  return debug?.map(({pageContent}: any) =>
+    pageContent?.replaceAll("\n", " ")
+  );
+}
