@@ -14,4 +14,16 @@ const DocsGrid: FunctionComponent<Props> = ({
   docs
                                          }) => {
   return (
-    <div className={styles.DocsGri
+    <div className={styles.DocsGrid}>
+      <Link href={`/documents/embed`} className={clsx(styles.GridItem, styles.addDoc)}>
+        <PlusIcon width={36} height={36} />
+        <span>Embed new document</span>
+      </Link>
+      {docs.map(doc => (
+        <GridItem key={doc.id} doc={doc} />
+      ))}
+    </div>
+  );
+}
+
+export default DocsGrid;
