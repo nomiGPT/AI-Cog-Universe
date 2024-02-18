@@ -35,4 +35,4 @@ const GeneratedUI: FunctionComponent<Props> = ({
   );
 }
 
-export d
+export default GeneratedUI;
