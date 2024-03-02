@@ -20,4 +20,73 @@ const MessageBox: FunctionComponent<MessageBoxProps> = ({
                                                           avatar,
                                                         }) => {
 
-  const shouldWrapInBubbl
+  const shouldWrapInBubble = bubble || (message.fromType === "ai" && message.type !== "idea");
+
+  if (message.type === "idea") {
+    return (
+      <div
+        className={clsx(styles.idea, styles.messageBox)}
+      >
+        <div><strong>Searching for: </strong></div>
+        <div className={styles.messageText}>
+          {message.content}
+        </div>
+      </div>
+    )
+  }
+
+  if (message.type === "generating") {
+    return (
+      <div
+        className={clsx(styles.idea, styles.messageBox)}
+      >
+        <div className={styles.messageText}>
+          {message.content}
+        </div>
+      </div>
+    )
+  }
+
+  if (message.type === "generated_image") {
+    console.log('drawing image');
+    return (
+      <div className={styles.imageWrapper}>
+        <img
+          src={message.content}
+          alt="Generated Image"
+          style={{
+            width: '100%',
+            minWidth: '500px',
+            height: 'auto',
+          }}
+          width={500}
+          height={500}
+        />
+      </div>
+    )
+  }
+
+  if (message.type === 'ui') {
+    return (
+      <GeneratedUI data={JSON.parse(message.content)}/>
+    )
+  }
+
+  return (
+    <div
+      className={clsx(
+        styles.messageBox,
+        shouldWrapInBubble && styles.bubble
+      )}
+    >
+      <div className="flex-shrink-0">
+        <Sender sender={message.fromType} avatar={avatar}/>
+      </div>
+      <Markdown className={styles.messageText}>
+        {message.content}
+      </Markdown>
+    </div>
+  );
+};
+
+export default Mess
