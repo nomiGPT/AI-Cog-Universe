@@ -51,4 +51,26 @@ const Key: FunctionComponent<Props> = ({
   return (
     <form className={styles.ManageAccountKeys} onSubmit={handleSubmit(onSubmit)}>
       <FormFieldWrapper
-        htmlFor={i
+        htmlFor={id}
+        label={label}
+      >
+        <TextInput
+          id={id}
+          placeholder={placeholder}
+          {...register('field')}
+          autoComplete={'off'}
+        />
+      </FormFieldWrapper>
+      <Button type={'submit'} disabled={!dirtyFields.field}>Update</Button>
+      <Button type={'button'} variant={'danger'} onClick={revoke}>Revoke</Button>
+    </form>
+  );
+
+  function revoke() {
+    mutation.mutate({
+      [id]: '',
+    })
+  }
+}
+
+export default Key;
