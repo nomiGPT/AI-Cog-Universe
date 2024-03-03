@@ -89,4 +89,4 @@ const MessageBox: FunctionComponent<MessageBoxProps> = ({
   );
 };
 
-export default Mess
+export default MessageBox;

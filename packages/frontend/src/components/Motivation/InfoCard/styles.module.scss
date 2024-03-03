@@ -1,0 +1,24 @@
+.InfoCard {
+  background-color: var(--secondary-background);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  position: relative;
+  cursor: pointer;
+  margin: 1rem;
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.InfoCard.alwaysActive::after,
+.InfoCard.alwaysActive::before,
+.InfoCard:hover::after,
+.InfoCard:hover::before {
+  display: block;
+  opacity: 1;
+}
+
+.description,
+.InfoCard::after,
+.InfoCard::before {
+  transi
