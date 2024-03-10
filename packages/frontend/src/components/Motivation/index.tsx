@@ -47,4 +47,52 @@ const Motivation: FunctionComponent = () => {
               {
                 targetId: 'cogniverse',
                 targetAnchor: 'left',
-                sourceA
+                sourceAnchor: 'right',
+                className: styles.relation
+              },
+            ]}
+          >
+            <div className={styles.element}>
+              <InfoCard
+                description={'Choose from a variety of large language models to power your bot'}
+              >
+                Large language models
+              </InfoCard>
+            </div>
+          </ArcherElement>
+          {/*Tools*/}
+          <ArcherElement
+            id="tools"
+            relations={[
+              {
+                targetId: 'cogniverse',
+                targetAnchor: 'left',
+                sourceAnchor: 'right',
+                className: styles.relation
+              },
+            ]}
+          >
+            <div className={styles.element}>
+              <InfoCard
+                description={'Configure the tools you want to use to power your bot: SerpAPI, Image generation with Dall-e, WolframAlpha, UI, etc...'}
+              >
+                Tools
+              </InfoCard>
+            </div>
+          </ArcherElement>
+          {/*Data sources*/}
+          <ArcherElement
+            id="data-sources"
+            relations={[
+              {
+                targetId: 'cogniverse',
+                targetAnchor: 'left',
+                sourceAnchor: 'right',
+                className: styles.relation
+              },
+            ]}
+          >
+            <div className={styles.element}>
+              <InfoCard
+                placement={"top-start"}
+                description={'Po
