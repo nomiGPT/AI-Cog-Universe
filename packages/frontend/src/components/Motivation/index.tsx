@@ -95,4 +95,52 @@ const Motivation: FunctionComponent = () => {
             <div className={styles.element}>
               <InfoCard
                 placement={"top-start"}
-                description={'Po
+                description={'Point your bot to documents or other data sources for data retrieval'}
+              >
+                Data sources
+              </InfoCard>
+            </div>
+          </ArcherElement>
+        </div>
+        {/*CogniVerse*/}
+        <ArcherElement
+          id="cogniverse"
+          relations={[
+            {
+              targetId: 'discord',
+              targetAnchor: 'left',
+              sourceAnchor: 'right',
+              className: styles.relation
+            },
+            {
+              targetId: 'slack',
+              targetAnchor: 'left',
+              sourceAnchor: 'right',
+              className: styles.relation
+            },
+            {
+              targetId: 'others',
+              targetAnchor: 'left',
+              sourceAnchor: 'right',
+              className: styles.relation
+            },
+          ]}
+        >
+          <div className={styles.element}>
+            <InfoCard status={'active'}><Logo /></InfoCard>
+          </div>
+        </ArcherElement>
+        <div className={styles.right}>
+          {/*integration*/}
+          <div className={styles.element}>
+            <InfoCard
+              status={'inactive'}
+              background={"var(--color-3-dim)"}
+              description={'Integrate your bot with messaging platforms like Discord, Telegram, Slack, etc.'}
+            >
+              Integrate with messaging platforms
+            </InfoCard>
+          </div>
+          {/*Discord*/}
+          <ArcherElement
+            id="disco
