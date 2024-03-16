@@ -15,4 +15,26 @@
   border-radius: 0.5rem;
 
   span {
-    font
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  svg {
+    transition: transform 0.2s ease-in-out;
+  }
+}
+
+.NavigationItem:hover {
+  svg {
+    transform: scale(1.2);
+  }
+}
+
+.NavigationItem:last-child {
+  margin-top: auto;
+}
+
+.active {
+  background-color: var(--button-active-background);
+  color: var(--button-active-foreground);
+}
