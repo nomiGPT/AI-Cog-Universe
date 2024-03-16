@@ -143,4 +143,38 @@ const Motivation: FunctionComponent = () => {
           </div>
           {/*Discord*/}
           <ArcherElement
-            id="disco
+            id="discord"
+          >
+            <div className={styles.element}>
+              <InfoCard>
+                <DiscordIcon width={"32px"} height={"32px"} /><span>Discord</span>
+              </InfoCard>
+            </div>
+          </ArcherElement>
+          {/*Slack*/}
+          <ArcherElement
+            id="slack"
+          >
+            <div className={styles.element}>
+              <InfoCard>
+                <SlackIcon width={"32px"} height={"32px"} /><span>Slack</span>
+              </InfoCard>
+            </div>
+          </ArcherElement>
+          {/*Others*/}
+          <ArcherElement
+            id="others"
+          >
+            <div className={styles.element}>
+              <InfoCard>
+                ...
+              </InfoCard>
+            </div>
+          </ArcherElement>
+        </div>
+      </div>
+    </ArcherContainer>
+  );
+}
+
+export default Motivation;
