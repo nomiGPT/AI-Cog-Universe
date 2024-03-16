@@ -26,4 +26,14 @@ const RouteGuard: FunctionComponent<PropsWithChildren> = ({children}) => {
     apiInstance.get(`/login/validate?access_token=${accessToken}`).then((response) => {
       const invalid = response.data.invalid;
       if (invalid) {
-        localStorage.re
+        localStorage.removeItem(LOCAL_STORAGE.TOKEN);
+        setAuthorized(false)
+        router.push('/login').then(() => console.log('Redirected to login page'))
+      } else {
+        setAuthorized(true);
+      }
+    })
+  }
+}
+
+export default RouteGuard;
