@@ -38,4 +38,12 @@
 }
 
 .iconButton {
-  dis
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  z-index: 1;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
