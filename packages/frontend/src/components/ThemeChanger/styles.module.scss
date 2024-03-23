@@ -1,0 +1,41 @@
+.ThemeChanger {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid var(--primary-foreground);
+  padding: 0.25rem;
+  border-radius: 1rem;
+  position: relative;
+
+  &.dark::after {
+    transform: translateX(0.25rem);
+  }
+
+  &.system::after {
+    transform: translateX(calc(0.75rem + 24px));
+  }
+
+  &.light::after {
+    transform: translateX(calc(1.25rem + 48px));
+  }
+}
+
+.ThemeChanger::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  left: 0;
+  background-color: var(--primary-foreground);
+  transition: transform 0.2s linear, background-color 0.2s linear;
+  z-index: 0;
+}
+
+.selected {
+  background-color: var(--primary-foreground);
+  color: var(--primary-background);
+}
+
+.iconButton {
+  dis

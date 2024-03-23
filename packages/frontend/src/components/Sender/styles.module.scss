@@ -7,3 +7,7 @@
   border-radius: 100%;
   background-color: var(--color-2);
   color: var(--inverse-foregraound);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
