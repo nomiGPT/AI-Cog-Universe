@@ -41,4 +41,19 @@ apiInstance.interceptors.response.use((response) => {
         type: "error",
       }); break;
     case HttpStatus.UNAUTHORIZED:
-      toast("Sorry! You don't h
+      toast("Sorry! You don't have permission to perform this action!", {
+        type: "error",
+      }); break;
+    case HttpStatus.NOT_FOUND:
+      toast("Resource not found!", {
+        type: "error",
+      }); break;
+    default:
+      toast("An error occurred!", {
+        type: "error",
+      });
+  }
+  return Promise.reject(error);
+});
+
+export default apiInstance;
