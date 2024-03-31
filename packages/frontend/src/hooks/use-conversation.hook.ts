@@ -16,4 +16,50 @@ const useConversation = (
   const [response, setResponse] = useState<NewMessage>();
   const [resources, setResources] = useState<any>();
 
-  const sendQuestion = useCallback(
+  const sendQuestion = useCallback((question: string, conversationId?: number, newConversation?: NewTitelessConversation ) => {
+    const socket = io(PATH, {
+      query: {
+        token: localStorage.getItem(LOCAL_STORAGE.TOKEN)
+      }
+    })
+    socket.emit('getCompletion', {
+      conversationId,
+      question,
+      newConversation
+    })
+    socket.on('data', (data) => {
+      console.log('handle emitted data', data)
+      const tokenMessage = data.content as NewMessage
+      if (data.type === 'conversationDetails') {
+        const conversation = data.content as Conversation
+        queryClient.invalidateQueries('conversations')
+        setConversationId(conversation.id)
+      }
+      console.log(tokenMessage)
+      if (data.type === 'token' && tokenMessage.type === 'response-token') {
+        setResponse((prev) => {
+          if (!prev) return tokenMessage
+          return {
+            ...tokenMessage,
+            content: prev.content + tokenMessage.content
+          }
+        })
+      }
+      if (data.type === 'retrieval' ||
+          data.type === 'ui' ||
+          data.type === 'generating' ||
+          data.type === 'generated_image'
+      ) {
+        onLatestResponseComplete(data.content)
+      }
+      if (data.type === 'response') {
+        onLatestResponseComplete(data.content)
+        setResponse(undefined)
+      }
+      if (data.type === 'question') {
+        onQuestionReceived(data.content)
+      }
+    })
+    socket.on('error', (error) => {
+      toast(error.message, {
+        type: "err
