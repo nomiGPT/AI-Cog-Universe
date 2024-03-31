@@ -62,4 +62,20 @@ const useConversation = (
     })
     socket.on('error', (error) => {
       toast(error.message, {
-        type: "err
+        type: "error"
+      })
+      console.error('error', error)
+    })
+    socket.on('disconnect', (reason) => {
+      console.log('disconnect', reason)
+    })
+
+    return () => {
+      socket.close()
+    };
+  }, [onLatestResponseComplete]);
+
+  return {response, sendQuestion, resources};
+}
+
+export default useConversation
