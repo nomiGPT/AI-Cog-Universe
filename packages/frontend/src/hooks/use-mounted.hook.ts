@@ -7,4 +7,6 @@ export function useMounted() {
     setMounted(true)
 
     return () => setMounted(false)
-  }, 
+  }, [])
+  return mounted;
+}
