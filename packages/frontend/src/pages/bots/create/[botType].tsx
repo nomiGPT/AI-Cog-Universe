@@ -7,4 +7,11 @@ import BotType from "@my-monorepo/shared/dist/types/bot/bot-type";
 
 const Create: NextPageWithLayout = () => {
   const router = useRouter();
-  const botType = router.query.bot
+  const botType = router.query.botType as BotType;
+
+  return <CreateBot botType={botType} />;
+}
+
+Create.getLayout = getLayout;
+
+export default Create;
