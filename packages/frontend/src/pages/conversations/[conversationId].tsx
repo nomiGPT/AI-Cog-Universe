@@ -68,4 +68,13 @@ const Conversation: NextPageWithLayout = () => {
     return current
       ?
       {
-    
+        botId: current.bot.id,
+        documentId: current.document?.id,
+      }
+      : undefined
+  }
+};
+
+Conversation.getLayout = getLayout
+
+export default Conversation;
