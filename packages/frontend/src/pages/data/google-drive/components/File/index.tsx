@@ -9,4 +9,14 @@ const File = ({ data }: { data: any }) => {
         <img
           alt={`Thumbnail for file name ${data.name}`}
           src={data.thumbnailLink}
-       
+        />
+      )}
+      <div className={styles.caption}>
+        <DocumentIcon height={24} width={24} />
+        <span>{data.name}</span>
+      </div>
+    </Selectable>
+  );
+};
+
+export default File;
