@@ -65,4 +65,27 @@ const GoogleDriveListing = ({ id }: { id: string }) => {
     <>
       <section className={styles.actions}>
         <Button
-          disabled={!selected.size || d
+          disabled={!selected.size || dataSourceAdd.isLoading}
+          onClick={() => dataSourceAdd.mutate(mapSelectedToDto())}
+        >
+          Ingest documents
+        </Button>
+        {hasNextPage && (
+          <Button onClick={() => fetchNextPage()}>Load More</Button>
+        )}
+      </section>
+      <GoogleDriveSelection items={children} />
+    </>
+  );
+
+  function mapSelectedToDto(): GDDataSourceRequestDto {
+    return {
+      items: selectedFiles.map((file) => ({
+        id: file.id as string,
+        mimeType: file.mimeType as string,
+      })),
+    };
+  }
+};
+
+export default GoogleDriveListing;
