@@ -21,4 +21,33 @@ const GoogleDriveNavigation = ({ items }: { items: any[] }) => {
     }
   };
 
-  const onMove =
+  const onMove = ({
+    store: {
+      changed: { added, removed },
+    },
+  }: SelectionEvent) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      extractIds(added).forEach((id: string) => next.add(id));
+      extractIds(removed).forEach((id: string) => next.delete(id));
+      return next;
+    });
+  };
+
+  return (
+    <SelectionArea
+      className={styles.container}
+      onStart={onStart}
+      onMove={onMove}
+      selectables={'.' + styles.Selectable}
+    >
+      <ul className={styles.Selection}>
+        {items?.map((file: any) => (
+          <GoogleDriveItem key={file.id} data={file} />
+        ))}
+      </ul>
+    </SelectionArea>
+  );
+};
+
+export default GoogleDriveNavigation;
