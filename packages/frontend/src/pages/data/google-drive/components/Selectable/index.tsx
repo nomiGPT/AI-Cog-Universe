@@ -19,4 +19,14 @@ const Selectable: FunctionComponent<PropsWithChildren<Props>> = ({
     <li
       className={clsx(
         styles.Selectable,
-        
+        selected.has(id) && styles.selected,
+        className,
+      )}
+      data-key={id}
+    >
+      {children}
+    </li>
+  );
+};
+
+export default Selectable;
