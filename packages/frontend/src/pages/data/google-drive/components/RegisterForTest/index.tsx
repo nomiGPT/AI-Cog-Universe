@@ -24,4 +24,28 @@ const RegisterForTest: FunctionComponent<Props> = ({ className }) => {
   const [email, setEmail] = React.useState('');
   return (
     <section className={clsx(styles.RegisterForTest, className)}>
-      <h2>Regis
+      <h2>Register for Test</h2>
+      <p>
+        Google API app is in test mode, to be able to use it you should be
+        registered as a tester. Request joining as a tester by providing your
+        Google account email below.
+      </p>
+      <div className={styles.form}>
+        <TextInput
+          className={styles.input}
+          id={'email'}
+          name={'email'}
+          placeholder={'Enter your email'}
+          type={'email'}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Button disabled={!email} onClick={() => register(email)}>
+          Register
+        </Button>
+      </div>
+    </section>
+  );
+};
+
+export default RegisterForTest;
