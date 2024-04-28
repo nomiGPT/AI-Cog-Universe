@@ -12,4 +12,16 @@ const Google: NextPageWithLayout = () => {
   useEffect(() => {
     const code = params.get('code');
     if (code) {
-      apiInstance.post('/google/consent', { code }
+      apiInstance.post('/google/consent', { code }).then((res) => {
+        router
+          .push('/data/google-drive/root')
+          .then(() => console.log('Logged in successfully!'));
+      });
+    }
+  }, [params]);
+  return <div>Logging in...</div>;
+};
+
+Google.getLayout = Login.getLayout;
+
+export default Google;
