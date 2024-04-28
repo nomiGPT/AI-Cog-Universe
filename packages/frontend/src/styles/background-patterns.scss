@@ -8,4 +8,5 @@
 
 @mixin background-pattern-2($background-color, $dots-color) {
   background-color: $background-color;
-  background-image: repeating-linear-gradient(
+  background-image: repeating-linear-gradient(45deg, #{$dots-color}, #{$dots-color} 4.5px, #{$background-color} 4.5px, #{$background-color} 22.5px);
+}

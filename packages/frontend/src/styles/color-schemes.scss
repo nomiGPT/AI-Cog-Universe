@@ -1,0 +1,120 @@
+
+@mixin light-theme {
+  color-scheme: light;
+  // main colors
+  --orange-panton: #FB5607;
+  --blue-violet: #8338EC;
+  --rose: #FF006E;
+  --black: rgb(43, 43, 75);
+  --white: rgb(255, 248, 233);
+
+  --color-1-rgb: 43, 43, 75;
+  --color-1: rgb(var(--color-1-rgb));
+  --color-1-light: rgba(var(--color-1-rgb), 0.5);
+  --color-2-rgb: 248, 94, 70;
+  --color-2: rgb(var(--color-2-rgb));
+  --color-2-light: rgba(var(--color-2-rgb), 0.8);
+  --color-2-dim: rgba(var(--color-2-rgb), 0.5);
+  --color-3-rgb: 131,56,236;
+  --color-3: var(--blue-violet);
+  --color-3-dim: rgba(var(--color-3-rgb), 0.5);
+  --color-4: rgb(249, 124, 174);
+  --danger-color-rgb: 255, 0, 110;
+  --danger-color: rgb(var(--danger-color-rgb));
+
+  // blocks
+  --primary-background: rgb(255, 248, 233);
+  --secondary-background: #ffffff;
+  --inverse-background: #000;
+  --primary-foreground: var(--color-1);
+  --inverse-foregraound: #000;
+  --primary-inverse-background: rgb(32, 29, 29);
+  --secondary-inverse-background: rgb(43, 43, 75);
+  --primary-inverse-foreground: var(--primary-background);
+
+  --accent-background: #51CBEE;
+  --primary-border: rgb(190, 186, 176);
+
+  // text input
+  --text-input-hint: var(--primary-border);
+  --input-error: var(--danger-color);
+
+  // buttons
+  --primary-button-background: var(--color-2);
+  --primary-button-foreground: var(--inverse-foregraound);
+  --primary-button-hover-background: var(--color-2-light);
+  --primary-button-focus-outline: var(--color-1);
+  --secondary-button-background: #fb5607;
+  --secondary-button-foreground: var(--inverse-foregraound);
+  --teriary-button-background: #FF006E;
+  --teriary-button-foreground: var(--inverse-foregraound);
+  --button-accent-background: #8338EC;
+  --button-accent-foreground: var(--inverse-foregraound);
+  --button-hover-background: #3A86FF;
+  --button-hover-foreground: var(--inverse-foregraound);
+  --button-active-background: #fff;
+  --button-active-foreground: var(--inverse-foregraound);
+  --button-focus-background: #fff;
+  --button-focus-foreground: var(--inverse-foregraound);
+  --inverse-button-background: #fff;
+  --inverse-button-foreground: var(--inverse-foregraound);
+  --success-button-background: #fff;
+  --success-button-foreground: var(--inverse-foregraound);
+  --error-button-background: #fff;
+  --error-button-foreground: var(--inverse-foregraound);
+  --warning-button-background: #fff;
+  --warning-button-foreground: var(--inverse-foregraound);
+  --disabled-button-background: rgb(199, 199, 199);
+  --disabled-button-foreground: var(--inverse-foregraound);
+
+  // toast
+  --toastify-color-light: var(--primary-background);
+  --toastify-text-color-light: var(--primary-foreground);
+}
+
+@mixin dark-theme {
+  color-scheme: dark;
+
+  --color-1-rgb: 254, 255, 249;
+  --color-2-rgb: 217, 255, 93;
+  --color-3-rgb: 0, 206, 235;
+  --color-3: rgb(0, 206, 235);
+  --color-4: rgb(255, 82, 29);
+  --color-5: rgb(255, 216, 68);
+
+
+  --primary-background: rgb(18, 18, 18);
+  --secondary-background: rgb(32, 29, 29);
+  --primary-foreground: var(--color-1);
+  --accent-background: #575757;
+  --primary-inverse-background: rgb(255, 248, 233);
+  --secondary-inverse-background: #ffffff;
+
+
+  --disabled-button-background: rgb(182, 182, 182);
+  --primary-border: rgb(126, 126, 126);
+
+  --text-input-hint: var(--primary-border);
+
+  //// toast
+  //--toastify-color-dark: var(--primary-background);
+  //--toastify-text-color-dark: var(--primary-foreground);
+}
+
+:root {
+  @include light-theme
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include dark-theme
+  }
+}
+
+:root.dark-theme {
+  @include dark-theme
+}
+
+:root.light-theme {
+  @include light-theme
+}
