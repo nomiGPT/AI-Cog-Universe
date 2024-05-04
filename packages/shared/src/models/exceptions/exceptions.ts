@@ -84,4 +84,30 @@ export class EnvironmentVariableNotSetException extends AppException {
 }
 
 export class InvalidRequestException extends AppException {
- 
+  constructor(message: string) {
+    super(message);
+    this.code = errors.ERR_010.code;
+    this.source = 'user';
+    this.name = 'InvalidRequestException';
+  }
+}
+
+export class InternalServerException extends AppException {
+  constructor(message: string) {
+    super(message);
+    this.code = errors.ERR_011.code;
+    this.source = 'server';
+    this.name = 'InternalServerException';
+  }
+}
+
+export class SomethingWentWrongException extends AppException {
+  constructor(message: string) {
+    super(message);
+    this.code = errors.ERR_012.code;
+    this.source = 'unknown';
+    this.name = 'SomethingWentWrongException';
+  }
+}
+
+
