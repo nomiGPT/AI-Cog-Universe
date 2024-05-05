@@ -4,4 +4,8 @@ import {Bot} from "./bot";
 import {Account} from "./account";
 
 export type Conversation = PrismaConversation & {
-  docu
+  document?: DocumentMetadata
+  creator: Account
+  chatHistory: Message[]
+  bot: Bot
+}
